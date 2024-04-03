@@ -12,7 +12,7 @@ whitelist = ["ACTUAL_TEMPERATURE", "LOW_BAT", "OPERATING_VOLTAGE", "UNREACH", "S
 
 
 def get_values(params):
-    response = urllib.request.urlopen(params.xmlapi + "statelist.cgi", timeout=5)
+    response = urllib.request.urlopen(params.xmlapi + "statelist.cgi" + "?sid=" + params.token, timeout=5)
     return response.read().decode("ISO-8859-1")
 
 
@@ -85,6 +85,8 @@ if __name__ == '__main__':
                         default=60.0)
     parser.add_argument("-x", "--xmlapi", help="Url to the ccu xmlapi.", type=str,
                         default="http://ccu3-webui/addons/xmlapi/")
+    parser.add_argument("-k", "--token", help="Token of ccu3 xml-api.", type=str,
+                        default="")
     parser.add_argument('command', type=str, nargs='?', help='command', default="devices.number")
     parser.add_argument('device', type=str, nargs='?', help='The device name', default="")
     args = parser.parse_args()
